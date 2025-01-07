@@ -1,12 +1,98 @@
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/adapters.dart';
+import 'package:todoapp/components/dialog_box.dart';
+import 'package:todoapp/components/todo_tile.dart';
+import 'package:todoapp/data/database.dart';
 
-class HomePage extends StatelessWidget {
-  const HomePage({Key? key}) : super(key: key);
+class HomePage extends StatefulWidget {
+  HomePage({super.key});
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+
+  // reference to the hive box
+  final _myBox = Hive.box('todoBox');
+  // create a instance for the database
+  TodoDatabase db = TodoDatabase();
+
+  @override
+  void initState() {
+    super.initState();
+    // if this is the first time the app is opened, create the box
+    if (_myBox.get("TODOLIST") == null) {
+      db.createInitialData();
+    } else{
+      // there already data exists in the box
+      db.getData();
+    }
+  }
+
+  // text controller for dialog box
+  final _controller = TextEditingController();
+
+  // function to change the status of the task
+  void checkBoxChanged(bool? value, int index) {
+    setState(() {
+      db.todoList[index][1] = !db.todoList[index][1];
+    });
+    db.updateData();
+  }
+
+  // function to save the new task
+  void saveNewTask() {
+    setState(() {
+      db.todoList.add([_controller.text, false]);
+      _controller.clear();
+    });
+    Navigator.pop(context);
+    db.updateData();
+  }
+
+  // function to create a new task
+  void createNewTask() {
+    showDialog(
+        context: context,
+        builder: (context) {
+          return DialogBox(
+            controller: _controller,
+            onSave: saveNewTask,
+            onCancel: () => Navigator.pop(context),
+          );
+        });
+  }
+
+  // function to delete a task
+  void deleteTask(int index) {
+    setState(() {
+      db.todoList.removeAt(index);
+    });
+    db.updateData();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
+      backgroundColor: Colors.blue[200],
+      appBar: AppBar(
+        title: const Text('Todo App'),
+        centerTitle: true,
+      ),
+      floatingActionButton: FloatingActionButton(
+          onPressed: createNewTask, child: const Icon(Icons.add)),
+      body: ListView.builder(
+        itemCount: db.todoList.length,
+        itemBuilder: (context, index) {
+          return TodoTile(
+            taskName: db.todoList[index][0],
+            taskStatus: db.todoList[index][1],
+            onChanged: (value) => checkBoxChanged(value, index),
+            deleteTask: (context) => deleteTask(index),
+          );
+        },
+      ),
     );
   }
 }
