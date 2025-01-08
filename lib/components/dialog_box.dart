@@ -25,9 +25,7 @@ class DialogBox extends StatelessWidget {
               controller: controller,
               decoration: InputDecoration(
                   border: OutlineInputBorder(),
-                  hintText: controller.text.isEmpty
-                      ? "Add a new task"
-                      : controller.text),
+                  hintText: "Add a new task"),
             ),
 
             // save and cancel button

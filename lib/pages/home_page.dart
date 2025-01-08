@@ -34,9 +34,9 @@ class _HomePageState extends State<HomePage> {
   final _controller = TextEditingController();
 
   // function to change the status of the task
-  void checkBoxChanged(bool? value, int index) {
+  void checkBoxChanged(int index) {
     setState(() {
-      db.todoList[index][1] = !db.todoList[index][1];
+      db.todoList[index][1] = !db.todoList[index][1]; // toggle the status
     });
     db.updateData();
   }
@@ -76,20 +76,21 @@ class _HomePageState extends State<HomePage> {
   void editTask(int index) {
     _controller.text = db.todoList[index][0];
     showDialog(
-        context: context,
-        builder: (context) {
-          return DialogBox(
-            controller: _controller,
-            onSave: () {
-              setState(() {
-                db.todoList[index][0] = _controller.text;
-              });
-              Navigator.pop(context);
-              db.updateData();
-            },
-            onCancel: () => Navigator.pop(context),
-          );
-        }).then((_) => _controller.clear()); // clear the text field after editing
+            context: context,
+            builder: (context) {
+              return DialogBox(
+                controller: _controller,
+                onSave: () {
+                  setState(() {
+                    db.todoList[index][0] = _controller.text;
+                  });
+                  Navigator.pop(context);
+                  db.updateData();
+                },
+                onCancel: () => Navigator.pop(context),
+              );
+            })
+        .then((_) => _controller.clear()); // clear the text field after editing
   }
 
   @override
@@ -108,7 +109,7 @@ class _HomePageState extends State<HomePage> {
           return TodoTile(
             taskName: db.todoList[index][0],
             taskStatus: db.todoList[index][1],
-            onChanged: (value) => checkBoxChanged(value, index),
+            onChanged: (context) => checkBoxChanged(index),
             deleteTask: (context) => deleteTask(index),
             editTask: (context) => editTask(index),
           );

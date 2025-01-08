@@ -1,7 +1,7 @@
 import 'package:hive_flutter/adapters.dart';
 
 class TodoDatabase {
-  // todo list
+  // create a list of tasks
   List todoList = [];
 
   // reference to the hive box
