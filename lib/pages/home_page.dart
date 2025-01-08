@@ -12,9 +12,9 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-
   // reference to the hive box
   final _myBox = Hive.box('todoBox');
+
   // create a instance for the database
   TodoDatabase db = TodoDatabase();
 
@@ -24,7 +24,7 @@ class _HomePageState extends State<HomePage> {
     // if this is the first time the app is opened, create the box
     if (_myBox.get("TODOLIST") == null) {
       db.createInitialData();
-    } else{
+    } else {
       // there already data exists in the box
       db.getData();
     }
@@ -72,6 +72,26 @@ class _HomePageState extends State<HomePage> {
     db.updateData();
   }
 
+  // function to edit a task
+  void editTask(int index) {
+    _controller.text = db.todoList[index][0];
+    showDialog(
+        context: context,
+        builder: (context) {
+          return DialogBox(
+            controller: _controller,
+            onSave: () {
+              setState(() {
+                db.todoList[index][0] = _controller.text;
+              });
+              Navigator.pop(context);
+              db.updateData();
+            },
+            onCancel: () => Navigator.pop(context),
+          );
+        }).then((_) => _controller.clear()); // clear the text field after editing
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -90,6 +110,7 @@ class _HomePageState extends State<HomePage> {
             taskStatus: db.todoList[index][1],
             onChanged: (value) => checkBoxChanged(value, index),
             deleteTask: (context) => deleteTask(index),
+            editTask: (context) => editTask(index),
           );
         },
       ),
