@@ -51,7 +51,7 @@ class TodoTile extends StatelessWidget {
             color: Color(0xFFD71921),
             borderRadius: BorderRadius.circular(10),
           ),
-          child: Stack(
+          child: Column(
             children: [
               // row for task name and status
               Row(
@@ -64,7 +64,7 @@ class TodoTile extends StatelessWidget {
                   ),
 
                   // task name
-                  Flexible(
+                  Expanded(
                     child: Text(
                       taskName,
                       style: TextStyle(
@@ -76,9 +76,8 @@ class TodoTile extends StatelessWidget {
                 ],
               ),
               // task date
-              Positioned(
-                bottom: 0,
-                right: 0,
+              Align(
+                alignment: Alignment.bottomRight,
                 child: Text(
                   '${dateTime.day}/${dateTime.month}/${dateTime.year}-${dateTime.hour}:${dateTime.minute}',
                   style: TextStyle(fontSize: 12, color: Colors.white),

@@ -100,24 +100,35 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       backgroundColor: Color(0xFF1B1B1D),
       appBar: AppBar(
-        title: const Text('Todo App', style: TextStyle(color: Colors.white, fontFamily: 'DotMatrix'),),
+        title: const Text(
+          'Todo App',
+          style: TextStyle(color: Colors.white, fontFamily: 'DotMatrix'),
+        ),
         centerTitle: true,
       ),
       floatingActionButton: FloatingActionButton(
           onPressed: createNewTask, child: const Icon(Icons.add)),
-      body: ListView.builder(
-        itemCount: db.todoList.length,
-        itemBuilder: (context, index) {
-          return TodoTile(
-            taskName: db.todoList[index][0],
-            taskStatus: db.todoList[index][1],
-            onChanged: (context) => checkBoxChanged(index),
-            deleteTask: (context) => deleteTask(index),
-            editTask: (context) => editTask(index),
-            dateTime: db.todoList[index][2],
-          );
-        },
-      ),
+      body: ReorderableListView(
+          onReorder: (oldIndex, newIndex) {
+            setState(() {
+              // call the reorder function from todo database
+              db.reorderTasks(oldIndex, newIndex);
+            });
+          },
+          children: List.generate(db.todoList.length, (index) {
+            return Container(
+              key: ValueKey(index),
+              color: Color(0xFF1B1B1D),
+              child: TodoTile(
+                taskName: db.todoList[index][0],
+                taskStatus: db.todoList[index][1],
+                onChanged: (context) => checkBoxChanged(index),
+                deleteTask: (context) => deleteTask(index),
+                editTask: (context) => editTask(index),
+                dateTime: db.todoList[index][2],
+              ),
+            );
+          })),
     );
   }
 }
