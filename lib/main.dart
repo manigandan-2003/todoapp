@@ -21,16 +21,15 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       home: HomePage(),
       theme: ThemeData(
-        primarySwatch: Colors.blue,
         appBarTheme: AppBarTheme(
-          backgroundColor: Colors.blue,
+          backgroundColor: Color(0xFFD71921),
         ),
         floatingActionButtonTheme: FloatingActionButtonThemeData(
-          backgroundColor: Colors.blue,
-          foregroundColor: Colors.black,
+          backgroundColor: Color(0xFFD71921),
+          foregroundColor: Colors.white,
         ),
         dialogTheme: DialogTheme(
-          backgroundColor: Colors.blue,
+          backgroundColor: Color(0xFF1B1B1D),
         ),
       ),
     );

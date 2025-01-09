@@ -23,8 +23,10 @@ class DialogBox extends StatelessWidget {
             // get user input for task name
             TextField(
               controller: controller,
+              cursorColor: Colors.white,
               decoration: InputDecoration(
                   border: OutlineInputBorder(), hintText: "Add a new task"),
+              style: TextStyle(color: Colors.white),
             ),
 
             // save and cancel button
@@ -34,12 +36,12 @@ class DialogBox extends StatelessWidget {
                 // cancel button
                 MyButton(
                     buttonName: "Cancel",
-                    buttonColor: Colors.red,
+                    buttonColor: Color(0xFFD71921),
                     onPressed: onCancel),
                 // save button
                 MyButton(
                     buttonName: "Save",
-                    buttonColor: Colors.green,
+                    buttonColor: Color(0xFFD71921),
                     onPressed: onSave),
               ],
             ),

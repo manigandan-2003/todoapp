@@ -28,7 +28,8 @@ class TodoTile extends StatelessWidget {
           SlidableAction(
             onPressed: editTask,
             icon: Icons.edit,
-            backgroundColor: Colors.green,
+            foregroundColor: Color(0xFFD71921),
+            backgroundColor: Color(0xFF1B1B1D),
             borderRadius: BorderRadius.circular(7),
           )
         ]),
@@ -38,7 +39,8 @@ class TodoTile extends StatelessWidget {
             SlidableAction(
               onPressed: deleteTask,
               icon: Icons.delete,
-              backgroundColor: Colors.red,
+              foregroundColor: Color(0xFFD71921),
+              backgroundColor: Color(0xFF1B1B1D),
               borderRadius: BorderRadius.circular(7),
             ),
           ],
@@ -46,7 +48,7 @@ class TodoTile extends StatelessWidget {
         child: Container(
           padding: EdgeInsets.all(15),
           decoration: BoxDecoration(
-            color: Colors.blue,
+            color: Color(0xFFD71921),
             borderRadius: BorderRadius.circular(10),
           ),
           child: Stack(
@@ -58,7 +60,7 @@ class TodoTile extends StatelessWidget {
                   Checkbox(
                     value: taskStatus,
                     onChanged: onChanged,
-                    activeColor: Colors.black,
+                    activeColor: Color(0xFF1B1B1D),
                   ),
 
                   // task name
@@ -66,6 +68,7 @@ class TodoTile extends StatelessWidget {
                     child: Text(
                       taskName,
                       style: TextStyle(
+                          color: Colors.white,
                           decoration:
                               taskStatus ? TextDecoration.lineThrough : null),
                     ),
@@ -78,7 +81,7 @@ class TodoTile extends StatelessWidget {
                 right: 0,
                 child: Text(
                   '${dateTime.day}/${dateTime.month}/${dateTime.year}-${dateTime.hour}:${dateTime.minute}',
-                  style: TextStyle(fontSize: 12),
+                  style: TextStyle(fontSize: 12, color: Colors.white),
                 ),
               ),
             ],

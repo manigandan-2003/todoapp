@@ -62,6 +62,7 @@ class _HomePageState extends State<HomePage> {
             onCancel: () => Navigator.pop(context),
           );
         });
+    _controller.clear();
   }
 
   // function to delete a task
@@ -97,9 +98,9 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.blue[200],
+      backgroundColor: Color(0xFF1B1B1D),
       appBar: AppBar(
-        title: const Text('Todo App'),
+        title: const Text('Todo App', style: TextStyle(color: Colors.white, fontFamily: 'DotMatrix'),),
         centerTitle: true,
       ),
       floatingActionButton: FloatingActionButton(
