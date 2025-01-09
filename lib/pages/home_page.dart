@@ -44,7 +44,7 @@ class _HomePageState extends State<HomePage> {
   // function to save the new task
   void saveNewTask() {
     setState(() {
-      db.todoList.add([_controller.text, false]);
+      db.todoList.add([_controller.text, false, DateTime.now()]);
       _controller.clear();
     });
     Navigator.pop(context);
@@ -83,6 +83,7 @@ class _HomePageState extends State<HomePage> {
                 onSave: () {
                   setState(() {
                     db.todoList[index][0] = _controller.text;
+                    db.todoList[index][2] = DateTime.now();
                   });
                   Navigator.pop(context);
                   db.updateData();
@@ -112,6 +113,7 @@ class _HomePageState extends State<HomePage> {
             onChanged: (context) => checkBoxChanged(index),
             deleteTask: (context) => deleteTask(index),
             editTask: (context) => editTask(index),
+            dateTime: db.todoList[index][2],
           );
         },
       ),

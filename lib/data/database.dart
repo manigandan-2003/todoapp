@@ -10,11 +10,11 @@ class TodoDatabase {
   // if this is the first time the app is opened, create the box
   void createInitialData() {
     todoList = [
-      ["This is a Todo App", false],
-      ["if you click the checkbox the task will be marked as completed", false],
-      ["if you swipe the task to the right you can delete the task", false],
-      ["if you swipe the task to the left you can edit the task", false],
-      ["click the + button to add a new task", false],
+      ["This is a Todo App", false, DateTime.now()],
+      ["if you click the checkbox the task will be marked as completed", false, DateTime.now()],
+      ["if you swipe the task to the right you can delete the task", false, DateTime.now()],
+      ["if you swipe the task to the left you can edit the task", false, DateTime.now()],
+      ["click the + button to add a new task", false, DateTime.now()],
     ];
   }
 

@@ -4,6 +4,7 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 class TodoTile extends StatelessWidget {
   final String taskName;
   final bool taskStatus;
+  final DateTime dateTime;
   Function(bool?)? onChanged;
   Function(BuildContext)? deleteTask;
   Function(BuildContext)? editTask;
@@ -12,6 +13,7 @@ class TodoTile extends StatelessWidget {
     super.key,
     required this.taskName,
     required this.taskStatus,
+    required this.dateTime,
     required this.onChanged,
     required this.deleteTask,
     required this.editTask,
@@ -47,22 +49,36 @@ class TodoTile extends StatelessWidget {
             color: Colors.blue,
             borderRadius: BorderRadius.circular(10),
           ),
-          child: Row(
+          child: Stack(
             children: [
-              // task status
-              Checkbox(
-                value: taskStatus,
-                onChanged: onChanged,
-                activeColor: Colors.black,
-              ),
+              // row for task name and status
+              Row(
+                children: [
+                  // task status
+                  Checkbox(
+                    value: taskStatus,
+                    onChanged: onChanged,
+                    activeColor: Colors.black,
+                  ),
 
-              // task name
-              Flexible(
+                  // task name
+                  Flexible(
+                    child: Text(
+                      taskName,
+                      style: TextStyle(
+                          decoration:
+                              taskStatus ? TextDecoration.lineThrough : null),
+                    ),
+                  ),
+                ],
+              ),
+              // task date
+              Positioned(
+                bottom: 0,
+                right: 0,
                 child: Text(
-                  taskName,
-                  style: TextStyle(
-                      decoration:
-                          taskStatus ? TextDecoration.lineThrough : null),
+                  '${dateTime.day}/${dateTime.month}/${dateTime.year}-${dateTime.hour}:${dateTime.minute}',
+                  style: TextStyle(fontSize: 12),
                 ),
               ),
             ],
